@@ -102,60 +102,103 @@ type FlattenedUser = Flatten<User>
  */
 ```
 
-### KeysOf<Entity, KeyType> & TypeOf<Entity, Key>
+### InferredType<Entity, Key>
 
 ```ts
-import { KeysOf, TypeOf } from 'tsds-tools'
+import { InferredType } from 'tsds-tools'
+
+interface User {
+  id: string
+  roles?: number[]
+  tags?: string[]
+}
+
+type Type1 = InferredType<User, 'id'> // string
+type Type2 = InferredType<User, 'roles'> // number
+type Type3 = InferredType<User, 'tags'> // string
+```
+
+### KeysOf<Entity, Type = any>
+
+Returns keyof Entity of type Type if provided
+
+```ts
+import { KeysOf, Primitive } from 'tsds-tools'
 
 interface User {
   id: string
   name?: string
   age?: number
   alias?: string[]
-  roles?: UserRole[]
   limits?: number[]
   profile?: UserProfile
-  login: { id: string; username: string }
-}
-
-enum UserRole {
-  USER = 'USER',
-  ADMIN = 'ADMIN',
 }
 
 interface UserProfile {
   bio?: string
-  sampleRate?: number
-  pictureURL?: { id?: string; depth?: number; sizes: number[]; url?: string }
 }
 
-const keyOf = <Key extends KeysOf<User>, Type extends TypeOf<User, Key>>(a: Key, b: Type) =>
-  console.log(a, b)
+type NumberKeys = KeysOf<User, number> // "age"
+type NumberArrayKeys = KeysOf<User, number[]> // "limits"
+type StringKeys = KeysOf<User, string> // "id" | "name"
+type StringArrayKeys = KeysOf<User, string[]> // "alias"
+type AllPrimitiveTypes = KeysOf<User, Primitive> // "id" | "name" | "age" | "alias" | "limits"
+type AllArrayKeys = KeysOf<User, any[]> // "alias" | "limits"
+type AllKeys = KeysOf<User> // "id" | "name" | "age" | "alias" | "limits" | "profile"
+```
 
-keyOf('name', 'string') // correct
-keyOf('name', 1) // incorrect
-keyOf('name1', 'string') // incorrect
+### KeysOfNonPrimitives<Entity, Type = any>
 
-keyOf('profile.bio', 'string') // correct
-keyOf('profile.bio', 1) // incorrect
-keyOf('profile.bio1', 'string') // incorrect
+Returns keyof Entity of non primitive type
 
-keyOf('profile.sampleRate', 1) // correct
-keyOf('profile.sampleRate', 'string') // incorrect
-keyOf('profile.sampleRate1', 1) // incorrect
+```ts
+import { KeysOfNonPrimitives } from 'tsds-tools'
 
-keyOf('profile.pictureURL.id', 'string') // correct
-keyOf('profile.pictureURL.id', 1) // incorrect
-keyOf('profile.pictureURL.id1', 'string') // incorrect
+interface User {
+  id: string
+  name?: string
+  age?: number
+  alias?: string[]
+  limits?: number[]
+  profile?: UserProfile
+  otherProfiles?: UserProfile[]
+}
 
-keyOf('profile.pictureURL.depth', 1) // correct
-keyOf('profile.pictureURL.depth', 'string') // incorrect
-keyOf('profile.pictureURL.depth1', 1) // incorrect
+interface UserProfile {
+  bio?: string
+}
 
-keyOf('profile.pictureURL.sizes', [1]) // correct
-keyOf('profile.pictureURL.sizes', 1) // incorrect
-keyOf('profile.pictureURL.sizes', ['string']) // incorrect
-keyOf('profile.pictureURL.sizes1', [1]) // incorrect
+type Keys = KeysOfNonPrimitives<User> // "profile"
+type NumberArrayKeys = KeysOf<User, number[]> // "limits"
+type StringKeys = KeysOf<User, string> // "id" | "name"
+type StringArrayKeys = KeysOf<User, string[]> // "alias"
+type AllPrimitiveTypes = KeysOf<User, Primitive> // "id" | "name" | "age" | "alias" | "limits"
+type AllArrayKeys = KeysOf<User, any[]> // "alias" | "limits"
+type AllKeys = KeysOf<User> // "id" | "name" | "age" | "alias" | "limits" | "profile"
+```
+
+### TypeOf<Entity, Key>
+
+```ts
+import { TypeOf } from './type-of'
+
+interface User {
+  id: string
+  name?: string
+  age?: number
+  alias?: string[]
+  limits?: number[]
+  profile?: UserProfile
+}
+
+interface UserProfile {
+  bio?: string
+}
+
+type Type1 = TypeOf<User, 'age'> // number
+type Type2 = TypeOf<User, 'name'> // string
+type Type3 = TypeOf<User, 'alias'> // string[]
+type Type4 = TypeOf<User, 'profile'> // UserProfile
 ```
 
 ### Primitive

@@ -1,8 +1,7 @@
-import { Flatten } from '../types/flatten'
 export function flatten<Entity extends Record<string, any>>(
   entity: Entity,
   prefix?: string,
-): Flatten<Entity> {
+): Record<string, any> {
   return Object.keys(entity).reduce((obj, key) => {
     const value = entity[key]
     const nextPrefix = [prefix, key].filter(i => !!i).join('.')
