@@ -1,5 +1,5 @@
 {
-  "name": "ts-tools",
+  "name": "@rintoj/ts-tools",
   "version": "0.0.0-development",
   "description": "A set of tools to help development using TypeScript",
   "main": "lib/index.js",

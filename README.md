@@ -9,13 +9,13 @@ A set of tools to help development using TypeScript
 ### Yarn
 
 ```sh
-yarn add ts-tools
+yarn add @rintoj/ts-tools
 ```
 
 ### NPM
 
 ```sh
-npm install ts-tools
+npm install @rintoj/ts-tools
 ```
 
 ## Types
@@ -23,7 +23,7 @@ npm install ts-tools
 ### AllRequired<T>
 
 ```ts
-import { AllRequired } from 'ts-tools'
+import { AllRequired } from '@rintoj/ts-tools'
 
 interface User {
   id: string
@@ -45,7 +45,7 @@ type UserRecord = AllRequired<User>
 ### ById<T>
 
 ```ts
-import { ById } from 'ts-tools'
+import { ById } from '@rintoj/ts-tools'
 
 type UsersById = ById<User>
 
@@ -59,7 +59,7 @@ type UsersById = ById<User>
 ### ClassType<T>
 
 ```ts
-import { ClassType } from 'ts-tools'
+import { ClassType } from '@rintoj/ts-tools'
 
 function someFunction(var1: ClassType<Repository>) {
   // var1 will only accept classes that extends from "Repository" class
@@ -69,7 +69,7 @@ function someFunction(var1: ClassType<Repository>) {
 ### Flatten<T>
 
 ```ts
-import { Flatten } from 'ts-tools'
+import { Flatten } from '@rintoj/ts-tools'
 
 interface User {
   id: string
@@ -105,7 +105,7 @@ type FlattenedUser = Flatten<User>
 ### KeysOf<Entity, KeyType> & TypeOf<Entity, Key>
 
 ```ts
-import { KeysOf, TypeOf } from 'ts-tools'
+import { KeysOf, TypeOf } from '@rintoj/ts-tools'
 
 interface User {
   id: string
@@ -177,7 +177,7 @@ Clone an array or object
 ### flatten(value: Array | Object)
 
 ```ts
-import { flatten } from 'ts-tools'
+import { flatten } from '@rintoj/ts-tools'
 
 const result = flatten({ a: 'a', b: { c: [1, 2, 3], d: 'd' } })
 
@@ -198,7 +198,7 @@ const result = flatten({ a: 'a', b: { c: [1, 2, 3], d: 'd' } })
 ### getProperty(key: string, entity: Object)
 
 ```ts
-import { getProperty } from 'ts-tools'
+import { getProperty } from '@rintoj/ts-tools'
 
 const object = {
   a: 'A',
@@ -221,7 +221,7 @@ getProperty('3.2.1', [0, 1, 2, [1, 2, [4, 5, 6]], 4] as const) // will return 5
 ### isDefined<T>(value: T | null | undefined)
 
 ```ts
-import { isDefined } from 'ts-tools'
+import { isDefined } from '@rintoj/ts-tools'
 
 const result = [1, 2, 'x', null, undefined, 0].filter(isDefined)
 // result = [1, 2, 'x', 0]
@@ -230,7 +230,7 @@ const result = [1, 2, 'x', null, undefined, 0].filter(isDefined)
 ### reconstruct<E>(record: Flatten<E>): E
 
 ```ts
-import { reconstruct } from 'ts-tools'
+import { reconstruct } from '@rintoj/ts-tools'
 
 const result = reconstruct({ a: 'a', 'b.d': 'd', 'b.c.0': 1, 'b.c.1': 2, 'b.c.2': 3 })
 // result = { a: 'a', b: { c: [1, 2, 3], d: 'd' } }
@@ -239,7 +239,7 @@ const result = reconstruct({ a: 'a', 'b.d': 'd', 'b.c.0': 1, 'b.c.1': 2, 'b.c.2'
 ### setProperty(key: any, value: any, entity: Object)
 
 ```ts
-import { setProperty } from 'ts-tools'
+import { setProperty } from '@rintoj/ts-tools'
 
 setProperty('a.b', 'B') // { a: { b: 'B' }
 setProperty('a.b', 'B', { a: { c: 'C' }, z: 1 }) // { a: { b: 'B', c: 'C' }, z: 1 }
@@ -248,7 +248,7 @@ setProperty('a.b', 'B', { a: { c: 'C' }, z: 1 }) // { a: { b: 'B', c: 'C' }, z: 
 ### toByProperty<T>(array: T[], property: keyof T = 'id' as any)
 
 ```ts
-import { toByProperty } from 'ts-tools'
+import { toByProperty } from '@rintoj/ts-tools'
 
 const array = [
   { id: 1, name: 'User 1' },
@@ -274,7 +274,7 @@ toByProperty(array, 'name')
 ### toNonNullArray<T>(array: Array<T | undefined | null>): T[]
 
 ```ts
-import { toNonNullArray } from 'ts-tools'
+import { toNonNullArray } from '@rintoj/ts-tools'
 
 toNonNullArray([1, 2, 'x', null, undefined, 0]) // [1, 2, 'x', 0]
 ```
