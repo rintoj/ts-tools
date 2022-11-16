@@ -1,9 +1,9 @@
 {
-  "name": "@rintoj/ts-tools",
+  "name": "tsds-tools",
   "version": "0.0.0-development",
   "description": "A set of tools to help development using TypeScript",
   "main": "lib/index.js",
-  "repository": "https://github.com/rintoj/ts-tools.git",
+  "repository": "https://github.com/rintoj/tsds-tools.git",
   "author": "Rinto Jose <rintoj@gmail.com>",
   "license": "MIT",
   "scripts": {

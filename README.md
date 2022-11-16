@@ -1,4 +1,4 @@
-# ts-tools
+# tsds-tools
 
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
@@ -9,13 +9,13 @@ A set of tools to help development using TypeScript
 ### Yarn
 
 ```sh
-yarn add @rintoj/ts-tools
+yarn add tsds-tools
 ```
 
 ### NPM
 
 ```sh
-npm install @rintoj/ts-tools
+npm install tsds-tools
 ```
 
 ## Types
@@ -23,7 +23,7 @@ npm install @rintoj/ts-tools
 ### AllRequired<T>
 
 ```ts
-import { AllRequired } from '@rintoj/ts-tools'
+import { AllRequired } from 'tsds-tools'
 
 interface User {
   id: string
@@ -45,7 +45,7 @@ type UserRecord = AllRequired<User>
 ### ById<T>
 
 ```ts
-import { ById } from '@rintoj/ts-tools'
+import { ById } from 'tsds-tools'
 
 type UsersById = ById<User>
 
@@ -59,7 +59,7 @@ type UsersById = ById<User>
 ### ClassType<T>
 
 ```ts
-import { ClassType } from '@rintoj/ts-tools'
+import { ClassType } from 'tsds-tools'
 
 function someFunction(var1: ClassType<Repository>) {
   // var1 will only accept classes that extends from "Repository" class
@@ -69,7 +69,7 @@ function someFunction(var1: ClassType<Repository>) {
 ### Flatten<T>
 
 ```ts
-import { Flatten } from '@rintoj/ts-tools'
+import { Flatten } from 'tsds-tools'
 
 interface User {
   id: string
@@ -105,7 +105,7 @@ type FlattenedUser = Flatten<User>
 ### KeysOf<Entity, KeyType> & TypeOf<Entity, Key>
 
 ```ts
-import { KeysOf, TypeOf } from '@rintoj/ts-tools'
+import { KeysOf, TypeOf } from 'tsds-tools'
 
 interface User {
   id: string
@@ -177,7 +177,7 @@ Clone an array or object
 ### flatten(value: Array | Object)
 
 ```ts
-import { flatten } from '@rintoj/ts-tools'
+import { flatten } from 'tsds-tools'
 
 const result = flatten({ a: 'a', b: { c: [1, 2, 3], d: 'd' } })
 
@@ -198,7 +198,7 @@ const result = flatten({ a: 'a', b: { c: [1, 2, 3], d: 'd' } })
 ### getProperty(key: string, entity: Object)
 
 ```ts
-import { getProperty } from '@rintoj/ts-tools'
+import { getProperty } from 'tsds-tools'
 
 const object = {
   a: 'A',
@@ -221,7 +221,7 @@ getProperty('3.2.1', [0, 1, 2, [1, 2, [4, 5, 6]], 4] as const) // will return 5
 ### isDefined<T>(value: T | null | undefined)
 
 ```ts
-import { isDefined } from '@rintoj/ts-tools'
+import { isDefined } from 'tsds-tools'
 
 const result = [1, 2, 'x', null, undefined, 0].filter(isDefined)
 // result = [1, 2, 'x', 0]
@@ -230,7 +230,7 @@ const result = [1, 2, 'x', null, undefined, 0].filter(isDefined)
 ### reconstruct<E>(record: Flatten<E>): E
 
 ```ts
-import { reconstruct } from '@rintoj/ts-tools'
+import { reconstruct } from 'tsds-tools'
 
 const result = reconstruct({ a: 'a', 'b.d': 'd', 'b.c.0': 1, 'b.c.1': 2, 'b.c.2': 3 })
 // result = { a: 'a', b: { c: [1, 2, 3], d: 'd' } }
@@ -239,7 +239,7 @@ const result = reconstruct({ a: 'a', 'b.d': 'd', 'b.c.0': 1, 'b.c.1': 2, 'b.c.2'
 ### setProperty(key: any, value: any, entity: Object)
 
 ```ts
-import { setProperty } from '@rintoj/ts-tools'
+import { setProperty } from 'tsds-tools'
 
 setProperty('a.b', 'B') // { a: { b: 'B' }
 setProperty('a.b', 'B', { a: { c: 'C' }, z: 1 }) // { a: { b: 'B', c: 'C' }, z: 1 }
@@ -248,7 +248,7 @@ setProperty('a.b', 'B', { a: { c: 'C' }, z: 1 }) // { a: { b: 'B', c: 'C' }, z: 
 ### toByProperty<T>(array: T[], property: keyof T = 'id' as any)
 
 ```ts
-import { toByProperty } from '@rintoj/ts-tools'
+import { toByProperty } from 'tsds-tools'
 
 const array = [
   { id: 1, name: 'User 1' },
@@ -274,7 +274,7 @@ toByProperty(array, 'name')
 ### toNonNullArray<T>(array: Array<T | undefined | null>): T[]
 
 ```ts
-import { toNonNullArray } from '@rintoj/ts-tools'
+import { toNonNullArray } from 'tsds-tools'
 
 toNonNullArray([1, 2, 'x', null, undefined, 0]) // [1, 2, 'x', 0]
 ```
