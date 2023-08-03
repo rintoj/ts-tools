@@ -314,6 +314,24 @@ toByProperty(array, 'name')
 // }
 ```
 
+### toArrayByProperty<T>(array: T[], property: keyof T = 'id' as any)
+
+```ts
+import { toArrayByProperty } from 'tsds-tools'
+
+const array = [
+  { id: 1, name: 'User 1' },
+  { id: 2, name: 'User 1' },
+  { id: 3, name: 'User 3' },
+]
+
+toArrayByProperty(array, 'name')
+// {
+//   'User 1': [{ id: 1, name: 'User 1' }, { id: 2, name: 'User 1' }],
+//   'User 3': [{ id: 3, name: 'User 3' }],
+// }
+```
+
 ### toNonNullArray<T>(array: Array<T | undefined | null>): T[]
 
 ```ts
