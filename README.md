@@ -279,6 +279,35 @@ const result = reconstruct({ a: 'a', 'b.d': 'd', 'b.c.0': 1, 'b.c.1': 2, 'b.c.2'
 // result = { a: 'a', b: { c: [1, 2, 3], d: 'd' } }
 ```
 
+### removeNullKeys<E, O>(record: Flatten<E>, prefix?: string): O
+
+```ts
+import { removeNullKeys } from 'tsds-tools'
+
+const result = removeNullKeys({
+  id: '1',
+  value: 0,
+  key1: [
+    {
+      key1: 'key1',
+      key2: undefined,
+    },
+    {
+      key1: null,
+      key2: 'key2',
+    },
+  ],
+  key2: undefined,
+  other: 'other',
+})
+// result = {
+//   id: '1',
+//   value: 0,
+//   key1: [{ key1: 'key1' }, { key2: 'key2' }],
+//   other: 'other',
+// }
+```
+
 ### setProperty(key: any, value: any, entity: Object)
 
 ```ts
