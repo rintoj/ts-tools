@@ -1,3 +1,4 @@
+export * from './array-async'
 export * from './deep-clone'
 export * from './flatten'
 export * from './get-property'
