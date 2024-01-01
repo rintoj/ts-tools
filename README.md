@@ -2,9 +2,9 @@
 
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-A set of tools to help development using TypeScript
+**tsds-tools** is a collection of TypeScript tools designed to enhance the development process.
 
-## Install
+## Installation
 
 ### Yarn
 
@@ -20,9 +20,11 @@ npm install tsds-tools
 
 ## Types
 
-### AllRequired<T>
+### AllRequired\<T>
 
-```ts
+Ensures all optional properties in a type are required.
+
+```typescript
 import { AllRequired } from 'tsds-tools'
 
 interface User {
@@ -32,43 +34,47 @@ interface User {
 }
 
 type UserRecord = AllRequired<User>
-
-/* Will produce the following type
+/* Produces:
  * interface UserRecord {
- *   id: string
- *   name: string
- *   age: number
+ *   id: string;
+ *   name: string;
+ *   age: number;
  * }
  */
 ```
 
-### ById<T>
+### ById\<T>
 
-```ts
+Creates a type where keys are IDs and values are objects of type T.
+
+```typescript
 import { ById } from 'tsds-tools'
 
 type UsersById = ById<User>
-
-/* Will produce the following type
+/* Produces:
  * interface UsersById {
- *   [id: string]: User
+ *   [id: string]: User;
  * }
  */
 ```
 
-### ClassType<T>
+### ClassType\<T>
 
-```ts
+Specifies that a variable only accepts classes that extend from the specified class.
+
+```typescript
 import { ClassType } from 'tsds-tools'
 
 function someFunction(var1: ClassType<Repository>) {
-  // var1 will only accept classes that extends from "Repository" class
+  // var1 only accepts classes that extend from the "Repository" class
 }
 ```
 
-### Flatten<T>
+### Flatten\<T>
 
-```ts
+Flattens a nested type structure by converting nested properties into flat, dotted notation.
+
+```typescript
 import { Flatten } from 'tsds-tools'
 
 interface User {
@@ -88,23 +94,22 @@ interface URL {
 }
 
 type FlattenedUser = Flatten<User>
-
-/*
- * Will result in the following type
- *
+/* Produces:
  * interface FlattenedUser {
- *   id: string
- *   name?: string
- *   'profile.bio': string
- *   'profile.age': number
- *   'profile.picture.url': string
+ *   id: string;
+ *   name?: string;
+ *   'profile.bio': string;
+ *   'profile.age': number;
+ *   'profile.picture.url': string;
  * }
  */
 ```
 
-### InferredType<Entity, Key>
+### InferredType\<Entity, Key>
 
-```ts
+Infers the type of a specific property within an entity.
+
+```typescript
 import { InferredType } from 'tsds-tools'
 
 interface User {
@@ -118,11 +123,11 @@ type Type2 = InferredType<User, 'roles'> // number
 type Type3 = InferredType<User, 'tags'> // string
 ```
 
-### KeysOf<Entity, Type = any>
+### KeysOf\<Entity, Type = any>
 
-Returns keyof Entity of type Type if provided
+Returns keys of an entity based on the specified type.
 
-```ts
+```typescript
 import { KeysOf, Primitive } from 'tsds-tools'
 
 interface User {
@@ -147,11 +152,11 @@ type AllArrayKeys = KeysOf<User, any[]> // "alias" | "limits"
 type AllKeys = KeysOf<User> // "id" | "name" | "age" | "alias" | "limits" | "profile"
 ```
 
-### KeysOfNonPrimitives<Entity, Type = any>
+### KeysOfNonPrimitives\<Entity, Type = any>
 
-Returns keyof Entity of non primitive type
+Returns keys of an entity that have non-primitive types.
 
-```ts
+```typescript
 import { KeysOfNonPrimitives } from 'tsds-tools'
 
 interface User {
@@ -177,9 +182,11 @@ type AllArrayKeys = KeysOf<User, any[]> // "alias" | "limits"
 type AllKeys = KeysOf<User> // "id" | "name" | "age" | "alias" | "limits" | "profile"
 ```
 
-### TypeOf<Entity, Key>
+### TypeOf\<Entity, Key>
 
-```ts
+Extracts the type of a specific property within an entity.
+
+```typescript
 import { TypeOf } from './type-of'
 
 interface User {
@@ -203,7 +210,9 @@ type Type4 = TypeOf<User, 'profile'> // UserProfile
 
 ### Primitive
 
-```ts
+Defines types that are either non-array primitives or array primitives.
+
+```typescript
 type NonArrayPrimitive = boolean | number | string | Date | null
 
 type ArrayPrimitive = Array<NonArrayPrimitive>
@@ -215,18 +224,18 @@ type Primitive = NonArrayPrimitive | ArrayPrimitive
 
 ### deepClone(value: Array | Object)
 
-Clone an array or object
+Creates a deep clone of an array or object.
 
 ### flatten(value: Array | Object)
 
-```ts
+Flattens an array or object into a one-dimensional object with dotted notation keys.
+
+```typescript
 import { flatten } from 'tsds-tools'
 
 const result = flatten({ a: 'a', b: { c: [1, 2, 3], d: 'd' } })
-
 /*
  * "result" will be :
- *
  * {
  *   'a': 'a',
  *   'b.d': 'd',
@@ -238,9 +247,51 @@ const result = flatten({ a: 'a', b: { c: [1, 2, 3], d: 'd' } })
  */
 ```
 
+### filterAsync(items: T[], callback: (item: T, index: number) => Promise<boolean>)
+
+Asynchronously filters an array based on a provided callback function.
+
+```typescript
+import { filterAsync } from 'tsds-tools';
+
+const result = await filterAsync(array, async callback(i) => true);
+```
+
+### mapAsync(items: T[], callback: (item: T, index: number) => Promise<T>)
+
+Asynchronously maps an array based on a provided callback function.
+
+```typescript
+import { mapAsync } from 'tsds-tools';
+
+const result = await mapAsync(array, async callback(i) => Promise.resolve(/* value */));
+```
+
+### flatMapAsync(items: T[], callback: (item: T, index: number) => Promise<T>)
+
+Asynchronously performs a flatMap operation on an array based on a provided callback function.
+
+```typescript
+import { flatMapAsync } from 'tsds-tools';
+
+const result = await flatMapAsync(array, async callback(i) => Promise.resolve(/* value */));
+```
+
+### reduceAsync(items: T[], callback: (accumulator: O, item: T, index: number) => Promise<O>)
+
+Asynchronously reduces an array based on a provided callback function.
+
+```typescript
+import { reduceAsync } from 'tsds-tools';
+
+const reducedValue = await reduceAsync(array, async callback(accumulator, i) => Promise.resolve(accumulator + i));
+```
+
 ### getProperty(key: string, entity: Object)
 
-```ts
+Retrieves a nested property value from an object using a dot-separated key.
+
+```typescript
 import { getProperty } from 'tsds-tools'
 
 const object = {
@@ -256,32 +307,38 @@ const object = {
   },
 }
 
-getProperty('c.d.e', object) // will return 'E'
-getProperty('c.d.h', object) // will return [1, 2]
-getProperty('3.2.1', [0, 1, 2, [1, 2, [4, 5, 6]], 4] as const) // will return 5
+getProperty('c.d.e', object) // returns 'E'
+getProperty('c.d.h', object) // returns [1, 2]
+getProperty('3.2.1', [0, 1, 2, [1, 2, [4, 5, 6]], 4] as const) // returns 5
 ```
 
-### isDefined<T>(value: T | null | undefined)
+### isDefined\<T>(value: T | null | undefined)
 
-```ts
+Filters out null and undefined values from an array.
+
+```typescript
 import { isDefined } from 'tsds-tools'
 
 const result = [1, 2, 'x', null, undefined, 0].filter(isDefined)
 // result = [1, 2, 'x', 0]
 ```
 
-### reconstruct<E>(record: Flatten<E>): E
+### reconstruct\<E>(record: Flatten<E>)
 
-```ts
+Reconstructs an object from its flattened representation.
+
+```typescript
 import { reconstruct } from 'tsds-tools'
 
 const result = reconstruct({ a: 'a', 'b.d': 'd', 'b.c.0': 1, 'b.c.1': 2, 'b.c.2': 3 })
 // result = { a: 'a', b: { c: [1, 2, 3], d: 'd' } }
 ```
 
-### removeNullKeys<E, O>(record: Flatten<E>, prefix?: string): O
+### removeNullKeys\<E, O>(record: Flatten<E>, prefix?: string)
 
-```ts
+Removes keys with null values from a flattened object.
+
+```typescript
 import { removeNullKeys } from 'tsds-tools'
 
 const result = removeNullKeys({
@@ -310,16 +367,20 @@ const result = removeNullKeys({
 
 ### setProperty(key: any, value: any, entity: Object)
 
-```ts
+Sets a nested property value in an object using a dot-separated key.
+
+```typescript
 import { setProperty } from 'tsds-tools'
 
-setProperty('a.b', 'B') // { a: { b: 'B' }
-setProperty('a.b', 'B', { a: { c: 'C' }, z: 1 }) // { a: { b: 'B', c: 'C' }, z: 1 }
+setProperty('a.b', 'B') // returns { a: { b: 'B' } }
+setProperty('a.b', 'B', { a: { c: 'C' }, z: 1 }) // returns { a: { b: 'B', c: 'C' }, z: 1 }
 ```
 
-### toByProperty<T>(array: T[], property: keyof T = 'id' as any)
+### toByProperty\<T>(array: T[], property: keyof T = 'id' as any)
 
-```ts
+Converts an array of objects into an object where keys are values of a specified property.
+
+```typescript
 import { toByProperty } from 'tsds-tools'
 
 const array = [
@@ -334,18 +395,14 @@ toByProperty(array)
 //   2: { id: 2, name: 'User 2' },
 //   3: { id: 3, name: 'User 3' },
 // })
-
-toByProperty(array, 'name')
-// {
-//   'User 1': { id: 1, name: 'User 1' },
-//   'User 2': { id: 2, name: 'User 2' },
-//   'User 3': { id: 3, name: 'User 3' },
-// }
 ```
 
-### toArrayByProperty<T>(array: T[], property: keyof T = 'id' as any)
+### toArrayByProperty\<T>(array: T[], property: keyof T = 'id' as any)
 
-```ts
+Converts an array of objects into an object where keys are values of a specified property, and
+values are arrays of objects.
+
+```typescript
 import { toArrayByProperty } from 'tsds-tools'
 
 const array = [
@@ -361,17 +418,19 @@ toArrayByProperty(array, 'name')
 // }
 ```
 
-### toNonNullArray<T>(array: Array<T | undefined | null>): T[]
+### toNonNullArray\<T>(array: Array<T | undefined | null>)
 
-```ts
+Filters out null and undefined values from an array.
+
+```typescript
 import { toNonNullArray } from 'tsds-tools'
 
-toNonNullArray([1, 2, 'x', null, undefined, 0]) // [1, 2, 'x', 0]
+toNonNullArray([1, 2, 'x', null, undefined, 0]) // returns [1, 2, 'x', 0]
 ```
 
 ## Automatic Release
 
-Here is an example of the release type that will be done based on a commit messages:
+The table below shows the release types based on commit messages:
 
 | Commit message      | Release type          |
 | ------------------- | --------------------- |
